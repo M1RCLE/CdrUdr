@@ -57,6 +57,7 @@ public class CDRCommutatorEmulatorService {
     }
 
     public void generateCDRFile(int amountOfRecords) {
+        clearFile();
         for (int i = 0; i < amountOfRecords; ++i) {
             CallType callType = CallType.valueOf((i % 2 == 0) ? "IncomingCall" : "OutComingCall");
             String phoneNumber = generatePhoneNumber();
