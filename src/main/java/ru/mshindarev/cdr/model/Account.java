@@ -1,4 +1,4 @@
-package ru.mshindarev.CDR;
+package ru.mshindarev.cdr.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

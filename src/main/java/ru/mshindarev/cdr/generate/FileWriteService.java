@@ -1,18 +1,18 @@
-package ru.mshindarev.CDR;
+package ru.mshindarev.cdr.generate;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import ru.mshindarev.cdr.model.CDR;
+import ru.mshindarev.cdr.model.CDRRecord;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.List;
 
 @AllArgsConstructor
 public class FileWriteService implements CdrService {
-    private final String CDR_PREFIX = "CDR_FILE_";
+    public final String CDR_PREFIX = "CDR_FILE_";
 
     private final Path path;
     @Override

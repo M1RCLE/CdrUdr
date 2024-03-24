@@ -1,9 +1,8 @@
-package ru.mshindarev.CDR;
+package ru.mshindarev.cdr.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 

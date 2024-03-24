@@ -1,12 +1,9 @@
-package ru.mshindarev.CDR;
+package ru.mshindarev.cdr.generate;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
+import ru.mshindarev.cdr.model.Account;
 
 public class AccountDataAccess {
     private final EntityManager entityManager;
@@ -41,12 +38,6 @@ public class AccountDataAccess {
     public void create(Account account) {
         entityManager.getTransaction().begin();
         entityManager.persist(account);
-        entityManager.getTransaction().commit();
-    }
-
-    public void delete(Account account) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(account);
         entityManager.getTransaction().commit();
     }
 }

@@ -1,6 +1,8 @@
-package ru.mshindarev.CDR;
+package ru.mshindarev.cdr.generate;
 
 import lombok.AllArgsConstructor;
+import ru.mshindarev.cdr.model.CDR;
+import ru.mshindarev.cdr.model.CDRRecord;
 
 import java.time.*;
 import java.util.Collections;

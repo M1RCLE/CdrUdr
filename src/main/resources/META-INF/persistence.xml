@@ -6,8 +6,8 @@
 
     <persistence-unit name="my-database">
 
-        <class>ru.mshindarev.CDR.Account</class>
-        <class>ru.mshindarev.CDR.Transaction</class>
+        <class>ru.mshindarev.cdr.model.Account</class>
+        <class>ru.mshindarev.cdr.model.Transaction</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres" />
