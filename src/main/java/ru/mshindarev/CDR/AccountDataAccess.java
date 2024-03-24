@@ -2,6 +2,7 @@ package ru.mshindarev.CDR;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 public class AccountDataAccess {
     private final EntityManager entityManager;
@@ -13,6 +14,13 @@ public class AccountDataAccess {
     public Account findAccountById(long id) {
         return entityManager.find(Account.class, id);
     }
+
+//    public Account getAccountByPhoneNumber(String phoneNumber) {
+//        entityManager.getTransaction().begin();
+//        String hql = "select acc from Account acc where Account.accountPhoneNumber = :phoneNumber";
+//        TypedQuery<Account> query = entityManager.createQuery(hql, Account.class);
+//        return query.setParameter("phoneNumber", phoneNumber).getFirstResult();
+//    }
 
     public long dataAmount() {
         entityManager.getTransaction().begin();

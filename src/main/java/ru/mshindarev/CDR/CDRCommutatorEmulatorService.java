@@ -6,7 +6,9 @@ import lombok.Setter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.*;
-import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -18,62 +20,77 @@ public class CDRCommutatorEmulatorService {
     private static final Random random = new Random();
 
     private final AccountDataAccess accountDataAccess;
+    private final TransactionDataAccess transactionDataAccess;
     private String fileNameForWriting;
-    private final long currentUnixTimeSeconds = Instant.now().getEpochSecond();
+    private static long transactionID = 0;
 
     private String generatePhoneNumber() {
         long valuesAmount = accountDataAccess.dataAmount();
-        return accountDataAccess.findAccountById(abs(random.nextLong(valuesAmount))+1).getAccountPhoneNumber();
+        return accountDataAccess.findAccountById(abs(random.nextLong(valuesAmount)) + 1).getAccountPhoneNumber();
     }
 
-    private long generateUnixTime() {
+    private long generateUnixTime(long monthAgo) {
         ZonedDateTime now = ZonedDateTime.now();
-        long seconds = 30 * 24 * 3600;
-        return now.minusSeconds(abs(random.nextLong(seconds))).toEpochSecond();
+        return now.minusMonths(1+abs(random.nextLong(Math.max(1,abs(monthAgo))))).toEpochSecond();
     }
 
     private long generateUnixEndTime(long startTime) {
-        return startTime + (long)(Math.random() * 3600); // Длительность звонка до 1 часа
+        return startTime + (long) (Math.random() * 3600); // Длительность звонка до 1 часа
     }
 
-    private String createCDRRecord(String callType, String phoneNumber, long startTime, long endTime) {
-        return callType + "," +
-                phoneNumber + "," +
-                startTime + "," +
-                endTime + "\n";
-    }
-
-    private void writeCDRToFile(String cdrRecord) {
+    private void clearFile(int monthIndex) {
         try {
-            FileWriter writer = new FileWriter(fileNameForWriting, true);
-            writer.write(cdrRecord);
-            writer.close();
-        } catch (IOException e) {
-            System.err.println("CDRCommutatorEmulator::writeCDRToFile file writing error");
-        }
-    }
-
-    private void clearFile() {
-        try {
-            new FileWriter(fileNameForWriting, false).close();
+            new FileWriter(fileNameForWriting + '_' + monthIndex + ".txt", false).close();
         } catch (IOException e) {
             System.err.println("CDRCommutatorEmulator::writeCDRToFile file clear error");
         }
     }
 
-    public void generateCDRFile(int amountOfRecords) {
-        clearFile();
-        for (int i = 0; i < amountOfRecords; ++i) {
-            String callType = (i % 2 == 0) ? "02" : "01";
-            String phoneNumber = generatePhoneNumber();
-            long startTime = generateUnixTime();
-            long endTime = generateUnixEndTime(startTime);
-            String cdrRecord = createCDRRecord(callType, phoneNumber, startTime, endTime);
-
-            if (i == 0) clearFile();
-            writeCDRToFile(cdrRecord);
+    private void writeCDRToFile(List<CDR> cdrs) {
+        try {
+            for (int i = 0; i < cdrs.size(); ++i) {
+                FileWriter writer = new FileWriter(fileNameForWriting + "_" + (i + 1) + ".txt", true);
+                for (int j = 0; j < cdrs.get(i).getCdrRecords().size(); ++j) {
+                    writer.write(cdrs.get(i).getCdrRecords().get(j).toString());
+                }
+                writer.close();
+            }
+        } catch (IOException e) {
+            System.err.println("CDRCommutatorEmulator::writeCDRToFile file writing error");
         }
-
-        System.out.println("CDR файл успешно сгенерирован.");
     }
+
+//    private void writeCDRToDatabase(List<CDR> cdrs) {
+//        for (int i = 0; i < cdrs.size(); ++i) {
+//            for (int j = 0; j < cdrs.get(i).getCdrRecords().size(); ++j) {
+//
+//                Transaction transaction = new Transaction();
+//                transaction.setId(transactionID++);
+//                transaction.setAccountID(accountDataAccess.
+//                        getAccoutnByPhoneNumber(
+//                                cdrs.get(i).getCdrRecords().get(j).phoneNumber));
+//            }
+//        }
+//    }
+
+
+
+//    public List<CDR> generateCDRs(int amountOfRecords) {
+//        List<CDR> returner = new LinkedList<>();
+//        for (int j = 0; j < 12; ++j) {
+//            clearFile(j);
+//            List<CDRRecord> records = new ArrayList<>();
+//            for (int i = 0; i < amountOfRecords; ++i) {
+//                String callType = (i % 2 == 0) ? "02" : "01";
+//                String phoneNumber = generatePhoneNumber();
+//                long startTime = generateUnixTime(j);
+//                long endTime = generateUnixEndTime(startTime);
+//                records.add(new CDRRecord(callType, phoneNumber, startTime, endTime));
+//            }
+//            returner.add(new CDR(records));
+//        }
+//        System.out.println("CDRs успешно сгенерированы");
+//        return returner;
+//    }
+
 }

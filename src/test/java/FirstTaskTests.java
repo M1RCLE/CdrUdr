@@ -12,7 +12,7 @@ public class FirstTaskTests {
     @Test
     public void testGenerateCDRFileWithZeroRecords() {
         CDRCommutatorEmulatorService service = new CDRCommutatorEmulatorService("CDR_File.txt");
-        service.generateCDRFile(0);
+        service.generateCDRs(0);
         assertTrue(fileExists("CDR_File.txt"));
         assertEquals(0, countRecordsInFile("CDR_File.txt"));
     }
@@ -20,7 +20,7 @@ public class FirstTaskTests {
     @Test
     public void testGenerateCDRFileWithOneRecord() {
         CDRCommutatorEmulatorService service = new CDRCommutatorEmulatorService("CDR_File.txt");
-        service.generateCDRFile(1);
+        service.generateCDRs(1);
         assertTrue(fileExists("CDR_File.txt"));
         assertEquals(1, countRecordsInFile("CDR_File.txt"));
     }
