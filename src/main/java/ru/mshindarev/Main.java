@@ -29,13 +29,18 @@ public class Main {
 //                "CDRs/CDR_File");
         var writeCDRService = new FileWriteService(Path.of("./CDRs"));
 
-        var generator = new CDRGenerator(new AccountDataAccess(em));
+        var accountDataAccess = new AccountDataAccess(em);
+        var transactionDataAccess = new TransactionDataAccess(em);
+
+        var databaseWriter = new DatabaseWriterService(transactionDataAccess, accountDataAccess, em);
+        var generator = new CDRGenerator(accountDataAccess);
 
         LocalDate startDate = LocalDate.now().minusMonths(11);
         for(int i=0; i<12; i++) {
             LocalDate date = startDate.plusMonths(i);
             var cdrs = generator.generate(LocalDate.of(date.getYear(), date.getMonth(), 1));
             writeCDRService.writeCDRs(cdrs);
+            databaseWriter.writeCDRs(cdrs);
         }
     }
 }

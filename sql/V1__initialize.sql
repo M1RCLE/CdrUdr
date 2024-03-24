@@ -1,6 +1,6 @@
 CREATE TABLE Accounts
 (
-    AccountID          INT PRIMARY KEY,
+    AccountID          SERIAL PRIMARY KEY,
     AccountPhoneNumber VARCHAR(15)
 );
 

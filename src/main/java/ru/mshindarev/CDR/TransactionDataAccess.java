@@ -11,14 +11,14 @@ public class TransactionDataAccess {
     }
 
     public void create(Transaction account) {
-        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().begin();
         entityManager.persist(account);
-        entityManager.getTransaction().commit();
+//        entityManager.getTransaction().commit();
     }
 
-    public void delete(Transaction account) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(account);
-        entityManager.getTransaction().commit();
-    }
+//    public void delete(Transaction account) {
+//        entityManager.getTransaction().begin();
+//        entityManager.remove(account);
+//        entityManager.getTransaction().commit();
+//    }
 }

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class Transaction {
     @Id
     @Column(name = "TransactionID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToOne
