@@ -1,7 +1,7 @@
-package ru.mshindarev.cdr.generate;
+package ru.mshindarev.bce.generate;
 
 import jakarta.persistence.EntityManager;
-import ru.mshindarev.cdr.model.Transaction;
+import ru.mshindarev.bce.model.Transaction;
 
 public class TransactionDataAccess {
     private final EntityManager entityManager;

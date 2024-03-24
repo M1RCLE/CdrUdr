@@ -1,9 +1,9 @@
-package ru.mshindarev;
+package ru.mshindarev.bce;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.flywaydb.core.Flyway;
-import ru.mshindarev.cdr.generate.*;
+import ru.mshindarev.bce.generate.*;
 
 import java.nio.file.Path;
 import java.time.LocalDate;

@@ -1,9 +1,9 @@
-package ru.mshindarev.cdr.generate;
+package ru.mshindarev.bce.generate;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import ru.mshindarev.cdr.model.CDR;
-import ru.mshindarev.cdr.model.CDRRecord;
+import ru.mshindarev.bce.model.CDR;
+import ru.mshindarev.bce.model.CDRRecord;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,10 +1,10 @@
-package ru.mshindarev.cdr.generate;
+package ru.mshindarev.bce.generate;
 
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
-import ru.mshindarev.cdr.model.CDR;
-import ru.mshindarev.cdr.model.CDRRecord;
-import ru.mshindarev.cdr.model.Transaction;
+import ru.mshindarev.bce.model.CDR;
+import ru.mshindarev.bce.model.CDRRecord;
+import ru.mshindarev.bce.model.Transaction;
 
 import java.time.*;
 

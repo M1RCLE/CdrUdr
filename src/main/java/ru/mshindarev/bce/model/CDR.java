@@ -1,4 +1,4 @@
-package ru.mshindarev.cdr.model;
+package ru.mshindarev.bce.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

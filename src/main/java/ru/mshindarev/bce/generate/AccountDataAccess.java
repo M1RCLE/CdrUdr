@@ -1,9 +1,9 @@
-package ru.mshindarev.cdr.generate;
+package ru.mshindarev.bce.generate;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
-import ru.mshindarev.cdr.model.Account;
+import ru.mshindarev.bce.model.Account;
 
 public class AccountDataAccess {
     private final EntityManager entityManager;
