@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import re.mshindarev.CDR.CDRCommutatorEmulatorService;
+import ru.mshindarev.CDR.CDRCommutatorEmulatorService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

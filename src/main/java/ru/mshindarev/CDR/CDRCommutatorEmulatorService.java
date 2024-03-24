@@ -1,33 +1,42 @@
-package re.mshindarev.CDR;
+package ru.mshindarev.CDR;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
+
+import static java.lang.Math.abs;
 
 @Setter
 @AllArgsConstructor
 public class CDRCommutatorEmulatorService {
+
+    private static final Random random = new Random();
+
+    private final AccountDataAccess accountDataAccess;
     private String fileNameForWriting;
+    private final long currentUnixTimeSeconds = Instant.now().getEpochSecond();
 
     private String generatePhoneNumber() {
-        Random random = new Random();
-        StringBuilder phoneNumber = new StringBuilder("7"); // Предположим, что это российские номера
-        for (int i = 0; i < 9; i++) {
-            phoneNumber.append(random.nextInt(10));
-        }
-        return phoneNumber.toString();
+        long valuesAmount = accountDataAccess.dataAmount();
+        return accountDataAccess.findAccountById(abs(random.nextLong(valuesAmount))+1).getAccountPhoneNumber();
     }
 
     private long generateUnixTime() {
-        long minUnixTime = 1577836800L;
-        long maxUnixTime = System.currentTimeMillis() / 1000;
-        return minUnixTime + (long) (Math.random() * (maxUnixTime - minUnixTime));
+        ZonedDateTime now = ZonedDateTime.now();
+        long seconds = 30 * 24 * 3600;
+        return now.minusSeconds(abs(random.nextLong(seconds))).toEpochSecond();
     }
 
-    private String createCDRRecord(CallType callType, String phoneNumber, long startTime, long endTime) {
+    private long generateUnixEndTime(long startTime) {
+        return startTime + (long)(Math.random() * 3600); // Длительность звонка до 1 часа
+    }
+
+    private String createCDRRecord(String callType, String phoneNumber, long startTime, long endTime) {
         return callType + "," +
                 phoneNumber + "," +
                 startTime + "," +
@@ -52,14 +61,10 @@ public class CDRCommutatorEmulatorService {
         }
     }
 
-    private long generateUnixEndTime(long startTime) {
-        return startTime + (long)(Math.random() * 3600L); // Длительность звонка до 1 часа
-    }
-
     public void generateCDRFile(int amountOfRecords) {
         clearFile();
         for (int i = 0; i < amountOfRecords; ++i) {
-            CallType callType = CallType.valueOf((i % 2 == 0) ? "IncomingCall" : "OutComingCall");
+            String callType = (i % 2 == 0) ? "02" : "01";
             String phoneNumber = generatePhoneNumber();
             long startTime = generateUnixTime();
             long endTime = generateUnixEndTime(startTime);
